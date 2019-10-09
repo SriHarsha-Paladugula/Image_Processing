@@ -52,6 +52,13 @@ def intensity_transformation(image_path, transformation_type, power=0.25):
         return transformed_image.show()
     
 def contrast_stretching(image_path, r1, s1, r2, s2):
+    '''
+    The locations of points (r1,s1) and (r2,s2) control the shape of the transformation function.
+    If r1=s1 and r2=s2 the transformation is a linear function that produces no changes in intensity.
+    If r1=r2 and s1=0 and s2=L-1 the transformation becomes a thresholding function that creates a binary image.
+    Intermediate values of (r1, s1) and (r2, s2) produce various degrees of spread in the intensity levels 
+    of the output image, thus affecting its contrast
+    '''
     image_array = np.array(Image.open(image_path))
     new_image_array = image_array.copy()
     
@@ -181,7 +188,6 @@ def local_histogram_equalization(image_path=image_path, kernel_size=3, C=22.8, k
             if(mean_threshold and std_threshold):
                 image_array[i,j] = image_array[i,j] * C
             
-    #transformed_image_array = pad_image[1:rows+1, 1:columns+1]
     transformed_image =  Image.fromarray(image_array)
     end_time = time.time()
     print("Total time taken in secs: ", end_time-start_time)
