@@ -174,8 +174,8 @@ def local_histogram_equalization(image_path=image_path, kernel_size=3, C=22.8, k
     pad_image =np.zeros((rows+kernel_size-1,columns+kernel_size-1),dtype='uint8')
     pad_image[1:rows+1, 1:columns+1] = np.array(image_array)
     
-    for i in range(1,rows):
-        for j in range(1, columns):
+    for i in range(0,rows):
+        for j in range(0, columns):
             local_region = pad_image[i:i+kernel_size, j:j+kernel_size]
             local_mean = round(local_region.mean())
             local_std  = round(local_region.std())
